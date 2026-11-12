@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&lt;DevPortfolio /&gt; | Soluções em Software & Web</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#080c14',
+                            card: '#0f172a',
+                            cyan: '#00f0ff',
+                            green: '#10b981',
+                            purple: '#a855f7',
+                            border: '#1e293b'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['"Fira Code"', '"JetBrains Mono"', 'monospace'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #080c14;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        .font-code {
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Canvas Matrix Animation */
+        #matrixCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.12;
+            z-index: 0;
+        }
+
+        /* Glassmorphism Styling */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Card Glow Hover Effects */
+        .glow-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glow-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 240, 255, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.2);
+        }
+
+        /* Neon Glowing Elements */
+        .neon-avatar {
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.4), 0 0 50px rgba(168, 85, 247, 0.2);
+        }
+
+        .neon-glow-whatsapp {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+        }
+        .neon-glow-whatsapp:hover {
+            box-shadow: 0 0 35px rgba(16, 185, 129, 0.7);
+        }
+
+        .neon-glow-insta {
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+        .neon-glow-insta:hover {
+            box-shadow: 0 0 35px rgba(168, 85, 247, 0.7);
+        }
+
+        /* Terminal blinking cursor */
+        .cursor-blink::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080c14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f0ff;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen text-slate-200 antialiased selection:bg-brand-cyan selection:text-black">
+
+    <!-- BOTÃO FLUTUANTE DO WHATSAPP -->
+    <a id="floatingWhatsappBtn" href="https://wa.me/5577999199516" target="_blank" class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-emerald-500 text-slate-950 rounded-full shadow-2xl neon-glow-whatsapp hover:scale-110 transition-transform duration-300" title="Conversar no WhatsApp">
+        <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+        <i class="fa-brands fa-whatsapp text-3xl relative z-10"></i>
+    </a>
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#" class="font-code font-bold text-xl sm:text-2xl text-white tracking-tight">
+                <span class="text-brand-cyan">&lt;</span><span>DevSilva</span><span class="text-brand-purple">.dev</span> <span class="text-brand-cyan">/&gt;</span>
+            </a>
+
+            <!-- Status Indicator -->
+            <div class="hidden md:flex items-center gap-2 bg-slate-900/80 px-3 py-1.5 rounded-full border border-slate-800 text-xs font-code">
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span class="text-slate-300">Disponível para novos projetos</span>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-300">
+                <a href="#about" class="hover:text-brand-cyan transition">Sobre Mim</a>
+                <a href="#services" class="hover:text-brand-cyan transition">Serviços</a>
+                <a href="#portfolio" class="hover:text-brand-cyan transition">Portfólio</a>
+                <a href="#contact" class="hover:text-brand-cyan transition">Contato</a>
+            </nav>
+
+            <!-- CTA Header -->
+            <div class="flex items-center gap-3">
+                <a id="navWhatsappBtn" href="https://wa.me/5577999199516" target="_blank" class="bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600 hover:text-white px-4 py-2 rounded-xl text-xs font-code font-semibold border border-emerald-500/30 transition flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span class="hidden sm:inline">WhatsApp Direct</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden">
+        <!-- Matrix Rain Canvas Effect -->
+        <canvas id="matrixCanvas"></canvas>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Column -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    
+                    <div class="inline-flex items-center gap-2 px-3 me-auto py-1.5 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-brand-cyan font-code text-xs">
+                        <i class="fa-solid fa-terminal"></i>
+                        <span>Full-Stack Developer & Software Engineer</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight min-h-[90px] sm:min-h-[120px]">
+                        Desenvolvo soluções com <br class="hidden sm:inline">
+                        <span id="typingText" class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-emerald-400 to-brand-purple cursor-blink"></span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto lg:mx-0 font-normal">
+                        Sites modernos, landing pages de alta conversão, automações inteligentes e sistemas web personalizados para impulsionar o seu negócio.
+                    </p>
+
+                    <!-- CTAs Ação Rápida -->
+                    <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a id="heroWaBtn" href="https://wa.me/5577999199516" target="_blank" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-8 py-4 rounded-xl shadow-lg neon-glow-whatsapp transition-all duration-300 flex items-center justify-center gap-3 font-code">
+                            <i class="fa-brands fa-whatsapp text-2xl"></i>
+                            <span>Falar no WhatsApp</span>
+                        </a>
+
+                        <a id="heroInstaBtn" href="https://www.instagram.com/rick01_code?xtok=MTZ1NWNrbGE4NDZweQ==" target="_blank" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 hover:opacity-90 text-white font-bold px-8 py-4 rounded-xl shadow-lg neon-glow-insta transition-all duration-300 flex items-center justify-center gap-3 font-code">
+                            <i class="fa-brands fa-instagram text-2xl"></i>
+                            <span>Siga no Instagram</span>
+                        </a>
+                    </div>
+
+                    <!-- Tech Badges -->
+                    <div class="pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs font-code text-slate-400">
+                        <span class="text-slate-500">Stack:</span>
+                        <span class="flex items-center gap-1.5"><i class="fa-brands fa-react text-cyan-400"></i> React</span>
+                        <span class="flex items-center gap-1.5"><i class="fa-brands fa-node-js text-emerald-400"></i> Node.js</span>
+                        <span class="flex items-center gap-1.5"><i class="fa-brands fa-python text-amber-400"></i> Python</span>
+                        <span class="flex items-center gap-1.5"><i class="fa-brands fa-js text-yellow-400"></i> TypeScript</span>
+                    </div>
+
+                </div>
+
+                <!-- Hero Right Column (Avatar com Brilho Neon) -->
+                <div class="lg:col-span-5 flex flex-col items-center justify-center">
+                    <div class="relative group">
+                        <div class="w-56 h-56 sm:w-72 sm:h-72 rounded-full p-1 bg-gradient-to-tr from-brand-cyan via-emerald-400 to-brand-purple neon-avatar transition-transform duration-500 group-hover:scale-105">
+                            <img src="https://placehold.co/400x400/0f172a/00f0ff?text=DEV+AVATAR" alt="Foto do Desenvolvedor" class="w-full h-full object-cover rounded-full border-4 border-slate-950">
+                        </div>
+                        <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-slate-900 border border-brand-cyan/40 px-4 py-1.5 rounded-full text-xs font-code text-brand-cyan shadow-xl flex items-center gap-2 whitespace-nowrap">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            &lt;Dev Online /&gt;
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 relative bg-slate-950/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <h2 class="text-brand-cyan font-code text-sm tracking-wider uppercase">// Especialidades & Serviços</h2>
+                <p class="text-3xl sm:text-4xl font-bold text-white">Como posso ajudar seu negócio?</p>
+                <p class="text-slate-400 text-sm sm:text-base">Desenvolvimento sob medida com arquitetura moderna e foco total na experiência do usuário.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Service 1 -->
+                <div class="glass-panel p-8 rounded-2xl glow-card border border-slate-800">
+                    <div class="w-14 h-14 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl flex items-center justify-center text-brand-cyan text-2xl mb-6">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Landing Pages & Sites</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Páginas ultra-rápidas, otimizadas para SEO, responsivas para celular e integradas diretamente com seu WhatsApp.
+                    </p>
+                    <span class="text-xs font-code text-brand-cyan">
+                        HTML5 • Tailwind • React • Mobile First
+                    </span>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass-panel p-8 rounded-2xl glow-card border border-slate-800">
+                    <div class="w-14 h-14 bg-brand-purple/10 border border-brand-purple/30 rounded-xl flex items-center justify-center text-brand-purple text-2xl mb-6">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Sistemas Web & Apps</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Plataformas SaaS completas, painéis administrativos interativos e sistemas de gestão customizados.
+                    </p>
+                    <span class="text-xs font-code text-brand-purple">
+                        Node.js • React • TypeScript • Databases
+                    </span>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="glass-panel p-8 rounded-2xl glow-card border border-slate-800">
+                    <div class="w-14 h-14 bg-emerald-500/10 border border-emerald-500/30 rounded-xl flex items-center justify-center text-emerald-400 text-2xl mb-6">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Automações & APIs</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Integração entre plataformas, criação de bots, automação de processos repetitivos e desenvolvimento de APIs RESTful.
+                    </p>
+                    <span class="text-xs font-code text-emerald-400">
+                        Python • Node.js • Webhooks • REST APIs
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-6 space-y-6">
+                    <h2 class="text-brand-cyan font-code text-sm tracking-wider uppercase">// Sobre Mim</h2>
+                    <h3 class="text-3xl sm:text-4xl font-bold text-white">Engenharia de Software focada em Resultados.</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm sm:text-base">
+                        Sou desenvolvedor especializado no ecossistema Web moderno. Meu objetivo é transformar ideias em aplicações simples, funcionais e altamente lucrativas para empresas e empreendedores.
+                    </p>
+
+                    <!-- Tech List -->
+                    <div class="pt-4 space-y-3">
+                        <p class="text-xs font-code text-slate-300 font-semibold uppercase">Stack de Habilidades:</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-code">JavaScript (ES6+)</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-code">TypeScript</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-code">React.js</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-code">Node.js</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-code">Python</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-code">Tailwind CSS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center">
+                            <h4 class="text-3xl font-extrabold text-brand-cyan font-code mb-1">100%</h4>
+                            <p class="text-slate-400 text-xs">Código Limpo & Responsivo</p>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center">
+                            <h4 class="text-3xl font-extrabold text-emerald-400 font-code mb-1">&lt; 1s</h4>
+                            <p class="text-slate-400 text-xs">Velocidade e Performance</p>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center">
+                            <h4 class="text-3xl font-extrabold text-brand-purple font-code mb-1">24/7</h4>
+                            <p class="text-slate-400 text-xs">Suporte & Disponibilidade</p>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center">
+                            <h4 class="text-3xl font-extrabold text-yellow-400 font-code mb-1">Mobile</h4>
+                            <p class="text-slate-400 text-xs">Otimizado para Celulares</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Projects Section -->
+    <section id="portfolio" class="py-20 bg-slate-950/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <h2 class="text-brand-cyan font-code text-sm tracking-wider uppercase">// Portfólio</h2>
+                <p class="text-3xl sm:text-4xl font-bold text-white">Projetos em Destaque</p>
+                <p class="text-slate-400 text-sm sm:text-base">Exemplos de soluções desenvolvidas para clientes.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project 1 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border border-slate-800 glow-card group">
+                    <div class="h-48 bg-slate-900 relative overflow-hidden flex items-center justify-center">
+                        <img src="https://placehold.co/600x400/0f172a/00f0ff?text=SaaS+Dashboard" alt="Projeto SaaS" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <span class="text-[10px] font-code px-2 py-0.5 rounded bg-brand-cyan/10 text-brand-cyan">SaaS / Dashboard</span>
+                        <h3 class="text-lg font-bold text-white group-hover:text-brand-cyan transition">Plataforma de Gestão Web</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">Painel administrativo com gráficos em tempo real, controle de acessos e relatórios.</p>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border border-slate-800 glow-card group">
+                    <div class="h-48 bg-slate-900 relative overflow-hidden flex items-center justify-center">
+                        <img src="https://placehold.co/600x400/0f172a/10b981?text=Landing+Page+Vendas" alt="Landing Page" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <span class="text-[10px] font-code px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400">Landing Page</span>
+                        <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition">Landing Page de Alta Conversão</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">Página criada para captura de leads e vendas diretas com redirecionamento ao WhatsApp.</p>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border border-slate-800 glow-card group">
+                    <div class="h-48 bg-slate-900 relative overflow-hidden flex items-center justify-center">
+                        <img src="https://placehold.co/600x400/0f172a/a855f7?text=API+Automation" alt="Automação" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <span class="text-[10px] font-code px-2 py-0.5 rounded bg-brand-purple/10 text-brand-purple">Python / API</span>
+                        <h3 class="text-lg font-bold text-white group-hover:text-brand-purple transition">Bot de Automação & Notificação</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">Script automatizado em Python para envio de relatórios e mensagens personalizadas.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <!-- Contact info -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <h2 class="text-brand-cyan font-code text-sm tracking-wider uppercase mb-2">// Contato Direto</h2>
+                        <h3 class="text-3xl sm:text-4xl font-bold text-white">Solicite seu orçamento</h3>
+                        <p class="text-slate-400 mt-3 text-sm leading-relaxed">
+                            Preencha o formulário para gerar uma mensagem pronta e abrir diretamente no seu WhatsApp!
+                        </p>
+                    </div>
+
+                    <!-- Direct Links -->
+                    <div class="space-y-4">
+                        <a id="cardWaLink" href="https://wa.me/5577999199516" target="_blank" class="glass-panel p-5 rounded-2xl border border-emerald-500/30 flex items-center justify-between hover:bg-emerald-950/20 transition group">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm">WhatsApp</h4>
+                                    <p class="text-xs text-slate-400">Atendimento rápido</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-emerald-400 group-hover:translate-x-1 transition"></i>
+                        </a>
+
+                        <a id="cardInstaLink" href="https://www.instagram.com/rick01_code?xtok=MTZ1NWNrbGE4NDZweQ==" target="_blank" class="glass-panel p-5 rounded-2xl border border-purple-500/30 flex items-center justify-between hover:bg-purple-950/20 transition group">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm">Instagram Direct</h4>
+                                    <p class="text-xs text-slate-400">Acompanhe projetos e novidades</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-purple-400 group-hover:translate-x-1 transition"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Form Contact -->
+                <div class="lg:col-span-7">
+                    <div class="glass-panel p-6 sm:p-8 rounded-2xl border border-slate-800 shadow-2xl relative">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+                            <h4 class="text-lg font-bold text-white font-code flex items-center gap-2">
+                                <i class="fa-solid fa-paper-plane text-brand-cyan"></i>
+                                Enviar Mensagem para o WhatsApp
+                            </h4>
+                            <span class="text-[11px] font-code text-slate-400">Envio Automático</span>
+                        </div>
+
+                        <form id="whatsappForm" onsubmit="sendWhatsAppMessage(event)" class="space-y-4 text-sm">
+                            <div>
+                                <label class="block text-slate-300 font-medium mb-1.5">Seu Nome *</label>
+                                <input type="text" id="formName" required placeholder="Digite seu nome..." class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-4 py-3 text-white focus:border-brand-cyan focus:outline-none transition">
+                            </div>
+
+                            <div>
+                                <label class="block text-slate-300 font-medium mb-1.5">Serviço de Interesse *</label>
+                                <select id="formProjectType" class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-4 py-3 text-white focus:border-brand-cyan focus:outline-none transition">
+                                    <option value="Landing Page / Site Profissional">Landing Page / Site Profissional</option>
+                                    <option value="Desenvolvimento de Sistema Web / SaaS">Desenvolvimento de Sistema Web / SaaS</option>
+                                    <option value="Automação / Bot em Python">Automação / Bot em Python</option>
+                                    <option value="Criação ou Integração de API">Criação ou Integração de API</option>
+                                    <option value="Outros Serviços">Outros Serviços</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-slate-300 font-medium mb-1.5">Sua Mensagem *</label>
+                                <textarea id="formMessage" required rows="4" placeholder="Descreva brevemente o que você precisa..." class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-4 py-3 text-white focus:border-brand-cyan focus:outline-none transition resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-4 rounded-xl shadow-lg neon-glow-whatsapp transition flex items-center justify-center gap-2 font-code text-base">
+                                <i class="fa-brands fa-whatsapp text-xl"></i>
+                                <span>Enviar no WhatsApp</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 py-8 bg-slate-950 font-code text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-slate-400">
+                &copy; <span id="year"></span> DevSilva. Todos os direitos reservados.
+            </div>
+            <div class="flex items-center gap-6 text-slate-400">
+                <a id="footerWa" href="https://wa.me/5577999199516" target="_blank" class="hover:text-emerald-400 transition">WhatsApp</a>
+                <a id="footerInsta" href="https://www.instagram.com/rick01_code?xtok=MTZ1NWNrbGE4NDZweQ==" target="_blank" class="hover:text-purple-400 transition">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Functions -->
+    <script>
+        // CONFIGURAÇÕES DO SEU PERFIL (Altere o telefone e o Instagram aqui)
+        const devPhone = "5577999199516"; 
+        const devInstagram = "rick01_code";
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Canvas Matrix Rain Effect
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const matrixChars = '01</>{}[]=*+;DEVCODE';
+        const fontSize = 14;
+        let columns = Math.floor(canvas.width / fontSize);
+        let drops = Array(columns).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(8, 12, 20, 0.08)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00f0ff';
+            ctx.font = fontSize + 'px "Fira Code", monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 45);
+
+        // Typing Text Effect no Hero
+        const phrases = [
+            "código limpo e moderno.",
+            "landing pages de alta conversão.",
+            "sistemas web sob medida.",
+            "automações inteligentes."
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingSpeed = 90;
+        const typingTextElement = document.getElementById('typingText');
+
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
+
+            if (isDeleting) {
+                typingTextElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingTextElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                setTimeout(typeEffect, 1800);
+                return;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+            }
+
+            setTimeout(typeEffect, isDeleting ? typingSpeed / 2 : typingSpeed);
+        }
+        typeEffect();
+
+        // Envio do formulário do WhatsApp
+        function sendWhatsAppMessage(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('formName').value;
+            const projectType = document.getElementById('formProjectType').value;
+            const message = document.getElementById('formMessage').value;
+
+            const textMessage = `Olá!\n\nMeu nome é *${name}*.\nTenho interesse em: *${projectType}*.\n\n*Mensagem:*\n${message}`;
+            const encodedText = encodeURIComponent(textMessage);
+            const fullWaUrl = `https://wa.me/${devPhone}?text=${encodedText}`;
+
+            window.open(fullWaUrl, '_blank');
+        }
+
+        // Aplicar links do WhatsApp e Instagram nos botões da página
+        function applyDevDetails() {
+            const waUrl = `https://wa.me/${devPhone}`;
+            const instaUrl = `https://instagram.com/${devInstagram}`;
+
+            document.getElementById('navWhatsappBtn').href = waUrl;
+            document.getElementById('heroWaBtn').href = waUrl;
+            document.getElementById('floatingWhatsappBtn').href = waUrl;
+            document.getElementById('cardWaLink').href = waUrl;
+            document.getElementById('footerWa').href = waUrl;
+
+            document.getElementById('heroInstaBtn').href = instaUrl;
+            document.getElementById('cardInstaLink').href = instaUrl;
+            document.getElementById('footerInsta').href = instaUrl;
+        }
+
+        applyDevDetails();
+    </script>
+</body>
+</html>
