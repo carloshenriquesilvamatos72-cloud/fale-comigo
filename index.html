@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espaço & Beleza - Salão de Beleza</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #d4a373;
+            --primary-dark: #b08152;
+            --secondary: #faedcd;
+            --dark: #2b2b2b;
+            --light: #fefae0;
+            --accent: #e9edc9;
+            --white: #ffffff;
+            --gray: #717171;
+            --whatsapp: #25d366;
+            --whatsapp-dark: #128c7e;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #faf9f6;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--primary-dark);
+        }
+
+        .btn-header {
+            background-color: var(--whatsapp);
+            color: var(--white);
+            padding: 10px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .btn-header:hover {
+            background-color: var(--whatsapp-dark);
+            transform: translateY(-2px);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1600') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            color: var(--white);
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .btn-hero {
+            background-color: var(--whatsapp);
+            color: var(--white);
+            padding: 14px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: var(--transition);
+        }
+
+        .btn-hero:hover {
+            background-color: var(--whatsapp-dark);
+            transform: translateY(-3px);
+        }
+
+        /* SECTIONS GENERAL */
+        section {
+            padding: 100px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title span {
+            color: var(--primary-dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .section-title h2 {
+            font-size: 2.3rem;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        /* SERVICES */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            border-bottom: 4px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--whatsapp-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .btn-card:hover {
+            color: var(--whatsapp);
+            gap: 12px;
+        }
+
+        /* ABOUT */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-img img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            object-fit: cover;
+            height: 400px;
+        }
+
+        .about-content h2 {
+            font-size: 2.3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .about-content p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .features-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .features-list i {
+            color: var(--primary-dark);
+        }
+
+        /* CONTACT / AGENDAMENTO */
+        .contact {
+            background: linear-gradient(135deg, #fefae0 0%, #faedcd 100%);
+            border-radius: 20px;
+            margin: 0 8%;
+            padding: 60px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .contact h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .contact p {
+            color: var(--gray);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .info-details {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .info-item i {
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+        }
+
+        .btn-whatsapp-large {
+            background-color: var(--whatsapp);
+            color: var(--white);
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            transition: var(--transition);
+        }
+
+        .btn-whatsapp-large:hover {
+            background-color: var(--whatsapp-dark);
+            transform: scale(1.05);
+        }
+
+        /* BOTÃO FLUTUANTE DO WHATSAPP */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--whatsapp);
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            background-color: var(--whatsapp-dark);
+            transform: scale(1.1);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            text-align: center;
+            padding: 30px;
+            margin-top: 80px;
+            font-size: 0.9rem;
+        }
+
+        /* RESPONSIVO */
+        @media (max-width: 900px) {
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            nav {
+                display: none;
+            }
+            .contact {
+                margin: 0 4%;
+                padding: 40px 20px;
+            }
+            .info-details {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BOTÃO FLUTUANTE DO WHATSAPP (Aparece no canto da tela) -->
+    <!-- ALERTA: Substitua o número 5577999013244 pelo seu DDD + número do WhatsApp -->
+    <a href="https://wa.me/5577999013244?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20no%20salão." class="whatsapp-float" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-spa"></i> Diva's Stúdio de Beleza
+        </div>
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#servicos">Serviços</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#contato">Contato</a>
+        </nav>
+        <!-- Link de Agendamento direto para o WhatsApp -->
+        <a href="https://wa.me/5577999013244?text=Olá!%20Quero%20agendar%20um%20horário." target="_blank" class="btn-header">
+            <i class="fa-brands fa-whatsapp"></i> Agendar Horário
+        </a>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="inicio">
+        <h1>Realce a sua beleza natural</h1>
+        <p>Um espaço dedicado ao seu bem-estar, cuidado capilar e estética avançada.</p>
+        <!-- Botão principal apontando para o WhatsApp -->
+        <a href="https://wa.me/5577999013244?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20horário." target="_blank" class="btn-hero">
+            <i class="fa-brands fa-whatsapp"></i> Agendar pelo WhatsApp
+        </a>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="servicos">
+        <div class="section-title">
+            <span>O que oferecemos</span>
+            <h2>Nossos Serviços</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="fa-solid fa-scissors"></i></div>
+                <h3>Corte & Penteado</h3>
+                <p>Cortes modernos, clássicos e escovas modeladas para valorizar o seu estilo.</p>
+                <div class="price">A partir de R$ 70,00</div>
+                <a href="https://wa.me/5577999013244?text=Olá!%20Gostaria%20de%20agendar%20Corte%20e%20Penteado." target="_blank" class="btn-card">
+                    Agendar este serviço <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="fa-solid fa-palette"></i></div>
+                <h3>Coloração & Mechas</h3>
+                <p>Técnicas avançadas de luzes, balayage e coloração com produtos de alta qualidade.</p>
+                <div class="price">A partir de R$ 150,00</div>
+                <a href="https://wa.me/5577999013244?text=Olá!%20Gostaria%20de%20agendar%20Coloração%20e%20Mechas." target="_blank" class="btn-card">
+                    Agendar este serviço <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="fa-solid fa-hand-sparkles"></i></div>
+                <h3>Manicure & Pedicure</h3>
+                <p>Cuidados completos para mãos e pés com esmaltação duradoura e impecável.</p>
+                <div class="price">A partir de R$ 50,00</div>
+                <a href="https://wa.me/5577999013244?text=Olá!%20Gostaria%20de%20agendar%20Manicure%20e%20Pedicure." target="_blank" class="btn-card">
+                    Agendar este serviço <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="fa-solid fa-face-smile"></i></div>
+                <h3>Limpeza de Pele</h3>
+                <p>Tratamento facial profundo para renovação, hidratação e um brilho saudável.</p>
+                <div class="price">A partir de R$ 120,00</div>
+                <a href="https://wa.me/5577999013244?text=Olá!%20Gostaria%20de%20agendar%20Limpeza%20de%20Pele." target="_blank" class="btn-card">
+                    Agendar este serviço <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="sobre">
+        <div class="about-container">
+            <div class="about-img">
+                <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800" alt="Interior do Salão">
+            </div>
+            <div class="about-content">
+                <span>Quem Somos</span>
+                <h2>Sua melhor versão começa aqui</h2>
+                <p>Fundado com a paixão por elevar a autoestima, o Espaço & Beleza oferece um ambiente aconchegante, profissionais qualificados e um atendimento totalmente personalizado para cada cliente.</p>
+                <ul class="features-list">
+                    <li><i class="fa-solid fa-check"></i> Profissionais Especializados</li>
+                    <li><i class="fa-solid fa-check"></i> Produtos Premium</li>
+                    <li><i class="fa-solid fa-check"></i> Ambiente Acolhedor</li>
+                    <li><i class="fa-solid fa-check"></i> Atendimento com Hora Marcada</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT / AGENDAMENTO -->
+    <section id="contato">
+        <div class="contact">
+            <h3>Pronta para transformar o seu visual?</h3>
+            <p>Entre em contato conosco diretamente pelo WhatsApp para escolher o melhor dia e horário para o seu atendimento!</p>
+            
+            <div class="info-details">
+                <div class="info-item">
+                    <i class="fa-solid fa-location-dot"></i> Rua São Jose, s/n - Cavalhada - Bom Jesus Da Lapa
+                </div>
+                <div class="info-item">
+                    <i class="fa-solid fa-clock"></i> Segunda a Sábado: 09h às 19h
+                </div>
+            </div>
+
+            <!-- Botão Chamativo de Ação para o WhatsApp -->
+            <a href="https://wa.me/5577999013244?text=Olá!%20Gostaria%20de%20agendar%20um%20atendimento." target="_blank" class="btn-whatsapp-large">
+                <i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp Agora
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Espaço & Beleza. Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>
